@@ -107,16 +107,16 @@ public class PlaceDetails: Printable {
   optional func placeViewClosed()
 }
 
-// MARK: - GooglePlacesAutocomplete
+// MARK: - GooglePlacesAutocompleteService
 
 public class GooglePlacesAutocompleteService {
   var delegate: GooglePlacesAutocompleteDelegate?
   var apiKey: String?
   var places = [Place]()
-  var placeType: PlaceType = .All
-  var locationBias: LocationBias?
+  public var placeType: PlaceType = .All
+  public var locationBias: LocationBias?
   
-  init(apiKey: String, placeType: PlaceType = .All) {
+  public init(apiKey: String, placeType: PlaceType = .All) {
     self.apiKey = apiKey
     self.placeType = placeType
   }
@@ -149,6 +149,7 @@ public class GooglePlacesAutocompleteService {
   }
 }
 
+// MARK: - GooglePlacesAutocomplete (UINavigationController)
 
 public class GooglePlacesAutocomplete: UINavigationController {
   public var gpaViewController: GooglePlacesAutocompleteContainer!

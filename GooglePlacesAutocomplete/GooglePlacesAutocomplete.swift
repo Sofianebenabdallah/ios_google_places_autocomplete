@@ -110,9 +110,53 @@ public class PlaceDetails: CustomStringConvertible {
 }
 
 // MARK: - GooglePlacesAutocomplete
+
+public class GooglePlacesAutocompleteService {
+  var delegate: GooglePlacesAutocompleteDelegate?
+  var apiKey: String?
+  var places = [Place]()
+  var placeType: PlaceType = .All
+  var locationBias: LocationBias?
+  
+  init(apiKey: String, placeType: PlaceType = .All) {
+    self.apiKey = apiKey
+    self.placeType = placeType
+  }
+  
+  public func getPlaces(searchString: String, completion:([Place] -> Void)) {
+    var params = [
+      "input": searchString,
+      "types": placeType.description,
+      "key": apiKey ?? ""
+    ]
+    
+    if let bias = locationBias {
+      params["location"] = bias.location
+      params["radius"] = bias.radius.description
+    }
+    
+    GooglePlacesRequestHelpers.doRequest(
+      "https://maps.googleapis.com/maps/api/place/autocomplete/json",
+      params: params
+      ) { json in
+        if let predictions = json["predictions"] as? Array<[String: AnyObject]> {
+          self.places = predictions.map { (prediction: [String: AnyObject]) -> Place in
+            return Place(prediction: prediction, apiKey: self.apiKey)
+          }
+          self.delegate?.placesFound?(self.places)
+          completion(self.places)
+
+        }
+    }
+  }
+}
+
+
 public class GooglePlacesAutocomplete: UINavigationController {
   public var gpaViewController: GooglePlacesAutocompleteContainer!
   public var closeButton: UIBarButtonItem!
+  
+  public var gpaService: GooglePlacesAutocompleteService!
 
   // Proxy access to container navigationItem
   public override var navigationItem: UINavigationItem {
@@ -120,24 +164,27 @@ public class GooglePlacesAutocomplete: UINavigationController {
   }
 
   public var placeDelegate: GooglePlacesAutocompleteDelegate? {
-    get { return gpaViewController.delegate }
-    set { gpaViewController.delegate = newValue }
+    get { return gpaService.delegate }
+    set { gpaService.delegate = newValue }
   }
   
   public var locationBias: LocationBias? {
-    get { return gpaViewController.locationBias }
-    set { gpaViewController.locationBias = newValue }
+    get { return gpaService.locationBias }
+    set { gpaService.locationBias = newValue }
   }
 
   public convenience init(apiKey: String, placeType: PlaceType = .All) {
-    let gpaViewController = GooglePlacesAutocompleteContainer(
-      apiKey: apiKey,
-      placeType: placeType
-    )
+    let service = GooglePlacesAutocompleteService(apiKey: apiKey, placeType: placeType)
+    self.init(service:service)
+  }
+  
+  public convenience init(service: GooglePlacesAutocompleteService) {
 
+    let gpaViewController = GooglePlacesAutocompleteContainer(service: service)
     self.init(rootViewController: gpaViewController)
+    self.gpaService = service
     self.gpaViewController = gpaViewController
-
+    
     closeButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: "close")
     closeButton.style = UIBarButtonItemStyle.Done
 
@@ -161,18 +208,13 @@ public class GooglePlacesAutocompleteContainer: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var topConstraint: NSLayoutConstraint!
 
-  var delegate: GooglePlacesAutocompleteDelegate?
-  var apiKey: String?
-  var places = [Place]()
-  var placeType: PlaceType = .All
-  var locationBias: LocationBias?
+  public var gpaService: GooglePlacesAutocompleteService!
 
-  convenience init(apiKey: String, placeType: PlaceType = .All) {
+  convenience init(service: GooglePlacesAutocompleteService) {
     let bundle = NSBundle(forClass: GooglePlacesAutocompleteContainer.self)
 
     self.init(nibName: "GooglePlacesAutocomplete", bundle: bundle)
-    self.apiKey = apiKey
-    self.placeType = placeType
+    self.gpaService = service
   }
 
   deinit {
@@ -215,14 +257,14 @@ public class GooglePlacesAutocompleteContainer: UIViewController {
 // MARK: - GooglePlacesAutocompleteContainer (UITableViewDataSource / UITableViewDelegate)
 extension GooglePlacesAutocompleteContainer: UITableViewDataSource, UITableViewDelegate {
   public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return places.count
+    return gpaService.places.count
   }
 
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
 
     // Get the corresponding candy from our candies array
-    let place = self.places[indexPath.row]
+    let place = gpaService.places[indexPath.row]
 
     // Configure the cell
     cell.textLabel!.text = place.description
@@ -232,7 +274,7 @@ extension GooglePlacesAutocompleteContainer: UITableViewDataSource, UITableViewD
   }
 
   public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    delegate?.placeSelected?(self.places[indexPath.row])
+    gpaService.delegate?.placeSelected?(gpaService.places[indexPath.row])
   }
 }
 
@@ -240,7 +282,7 @@ extension GooglePlacesAutocompleteContainer: UITableViewDataSource, UITableViewD
 extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
   public func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
     if (searchText == "") {
-      self.places = []
+      gpaService.places = []
       tableView.hidden = true
     } else {
       getPlaces(searchText)
@@ -253,37 +295,13 @@ extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
     - parameter searchString: The search query
   */
   
-  private func getPlaces(searchString: String) {
-    var params = [
-      "input": searchString,
-      "types": placeType.description,
-      "key": apiKey ?? ""
-    ]
-    
-    if let bias = locationBias {
-      params["location"] = bias.location
-      params["radius"] = bias.radius.description
-    }
-    
-    if (searchString == ""){
-      return
-    }
-    
-    GooglePlacesRequestHelpers.doRequest(
-      "https://maps.googleapis.com/maps/api/place/autocomplete/json",
-      params: params
-      ) { json, error in
-        if let json = json{
-          if let predictions = json["predictions"] as? Array<[String: AnyObject]> {
-            self.places = predictions.map { (prediction: [String: AnyObject]) -> Place in
-              return Place(prediction: prediction, apiKey: self.apiKey)
-            }
-          self.tableView.reloadData()
-          self.tableView.hidden = false
-          self.delegate?.placesFound?(self.places)
-        }
+  func getPlaces(searchText: String){
+    gpaService.getPlaces(searchText, completion: {(places: [Place]) in
+      self.tableView.reloadData()
+      self.tableView.hidden = false
+
       }
-    }
+    )
   }
 }
 
@@ -400,8 +418,10 @@ class GooglePlacesRequestHelpers {
         return
       }
     }
+
     
     done(json,nil)
+      UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 
   }
 }

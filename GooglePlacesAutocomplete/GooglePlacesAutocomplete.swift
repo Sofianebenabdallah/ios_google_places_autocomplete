@@ -130,6 +130,7 @@ public class GooglePlacesAutocompleteService {
   var places = [Place]()
   public var placeType: PlaceType = .All
   public var locationBias: LocationBias?
+  public var country: String?
   
   public init(apiKey: String, placeType: PlaceType = .All) {
     self.apiKey = apiKey
@@ -146,6 +147,10 @@ public class GooglePlacesAutocompleteService {
     if let bias = locationBias {
       params["location"] = bias.location
       params["radius"] = bias.radius.description
+    }
+    
+    if let country = country {
+        params["components"] = "country:\(country)"
     }
     
     GooglePlacesRequestHelpers.doRequest(

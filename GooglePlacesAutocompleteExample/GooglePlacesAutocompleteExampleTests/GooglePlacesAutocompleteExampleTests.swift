@@ -42,7 +42,7 @@ class GooglePlacesAutocompleteTests: FBSnapshotTestCase, GooglePlacesAutocomplet
       )
     })
 
-    self.waitForExpectationsWithTimeout(2.0, handler: nil)
+    self.waitForExpectationsWithTimeout(5.0, handler: nil)
   }
 
   func placesFound(places: [Place]) {

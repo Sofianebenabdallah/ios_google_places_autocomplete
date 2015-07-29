@@ -11,5 +11,5 @@ Pod::Spec.new do |spec|
   spec.source_files = 'GooglePlacesAutocomplete/*.{h,swift}'
   spec.resources = 'GooglePlacesAutocomplete/*.{xcassets,xib}'
   spec.requires_arc = true
-  spec.frameworks = 'UIKit'
+  spec.frameworks = 'UIKit', 'CoreLocation'
 end

@@ -12,6 +12,7 @@
 		1E74A0E51A8E404F003C9173 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E74A0E41A8E404F003C9173 /* Images.xcassets */; };
 		1EC16D871A8E1D0100E0760A /* GooglePlacesAutocomplete.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EC16D861A8E1D0100E0760A /* GooglePlacesAutocomplete.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1EC16D8D1A8E1D0100E0760A /* GooglePlacesAutocomplete.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EC16D811A8E1D0100E0760A /* GooglePlacesAutocomplete.framework */; };
+		220D26501B69062E000086AD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 220D264F1B69062D000086AD /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +34,7 @@
 		1EC16D861A8E1D0100E0760A /* GooglePlacesAutocomplete.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GooglePlacesAutocomplete.h; sourceTree = "<group>"; };
 		1EC16D8C1A8E1D0100E0760A /* GooglePlacesAutocompleteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GooglePlacesAutocompleteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EC16D921A8E1D0100E0760A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		220D264F1B69062D000086AD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A775D26D60038FA671800829 /* Pods_GooglePlacesAutocompleteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GooglePlacesAutocompleteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -41,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				220D26501B69062E000086AD /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +118,7 @@
 		AD8E8FB00B303CE4801439E1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				220D264F1B69062D000086AD /* CoreLocation.framework */,
 				A775D26D60038FA671800829 /* Pods_GooglePlacesAutocompleteTests.framework */,
 			);
 			name = Frameworks;

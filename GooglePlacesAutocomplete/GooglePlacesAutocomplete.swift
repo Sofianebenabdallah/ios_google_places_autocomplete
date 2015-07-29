@@ -136,7 +136,7 @@ public class GooglePlacesAutocompleteService {
     self.placeType = placeType
   }
   
-  public func getPlaces(searchString: String, completion:([Place] -> Void)) {
+  public func getPlaces(searchString: String, completion:(([Place]?, NSError?) -> Void)) {
     var params = [
       "input": searchString,
       "types": placeType.description,
@@ -151,14 +151,20 @@ public class GooglePlacesAutocompleteService {
     GooglePlacesRequestHelpers.doRequest(
       "https://maps.googleapis.com/maps/api/place/autocomplete/json",
       params: params
-      ) { json in
-        if let predictions = json["predictions"] as? Array<[String: AnyObject]> {
-          self.places = predictions.map { (prediction: [String: AnyObject]) -> Place in
-            return Place(prediction: prediction, apiKey: self.apiKey)
-          }
-          self.delegate?.placesFound?(self.places)
-          completion(self.places)
+      ) { json, error in
+        if let json = json{
+            if let predictions = json["predictions"] as? Array<[String: AnyObject]> {
+              self.places = predictions.map { (prediction: [String: AnyObject]) -> Place in
+                return Place(prediction: prediction, apiKey: self.apiKey)
+              }
+              self.delegate?.placesFound?(self.places)
+              completion(self.places, error)
 
+            } else {
+                completion(nil, error)
+            }
+        } else {
+            completion(nil,error)
         }
     }
   }
@@ -310,7 +316,7 @@ extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
   */
   
   func getPlaces(searchText: String){
-    gpaService.getPlaces(searchText, completion: {(places: [Place]) in
+    gpaService.getPlaces(searchText, completion: {(places: [Place]?,error: NSError?) in
       self.tableView.reloadData()
       self.tableView.hidden = false
 
@@ -384,7 +390,7 @@ class GooglePlacesRequestHelpers {
 
   private class func handleResponse(data: NSData!, response: NSHTTPURLResponse!, error: NSError!, completion: (NSDictionary?, NSError?) -> ()) {
     
-    // Always return on the main thread...
+    // Perform table updates on UI thread
     let done: ((NSDictionary?, NSError?) -> Void) = {(json, error) in
         dispatch_async(dispatch_get_main_queue(), {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -419,6 +425,7 @@ class GooglePlacesRequestHelpers {
         options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
     } catch {
       print("Serialisation error")
+
       let serialisationError = NSError(domain: ErrorDomain, code: 1002, userInfo: [NSLocalizedDescriptionKey:"Serialization error"])
       done(nil,serialisationError)
       return
@@ -432,10 +439,8 @@ class GooglePlacesRequestHelpers {
         return
       }
     }
-
     
     done(json,nil)
-      UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 
   }
 }

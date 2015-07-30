@@ -388,7 +388,7 @@ class GooglePlacesRequestHelpers {
 
   private class func handleResponse(data: NSData!, response: NSHTTPURLResponse!, error: NSError!, completion: (NSDictionary?, NSError?) -> ()) {
     
-    // Perform table updates on UI thread
+    // Always return on the main thread...
     let done: ((NSDictionary?, NSError?) -> Void) = {(json, error) in
         dispatch_async(dispatch_get_main_queue(), {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -404,14 +404,14 @@ class GooglePlacesRequestHelpers {
 
     if response == nil {
       println("GooglePlaces Error: No response from API")
-        let error = NSError(domain: ErrorDomain, code: 1001, userInfo: [NSLocalizedDescriptionKey:"No response from API"])
+      let error = NSError(domain: ErrorDomain, code: 1001, userInfo: [NSLocalizedDescriptionKey:"No response from API"])
       done(nil,error)
       return
     }
 
     if response.statusCode != 200 {
       println("GooglePlaces Error: Invalid status code \(response.statusCode) from API")
-    let error = NSError(domain: ErrorDomain, code: response.statusCode, userInfo: [NSLocalizedDescriptionKey:"Invalid status code"])
+      let error = NSError(domain: ErrorDomain, code: response.statusCode, userInfo: [NSLocalizedDescriptionKey:"Invalid status code"])
       done(nil,error)
       return
     }

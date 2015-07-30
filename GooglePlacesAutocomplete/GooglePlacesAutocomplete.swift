@@ -395,7 +395,7 @@ class GooglePlacesRequestHelpers {
 
   private class func handleResponse(data: NSData!, response: NSHTTPURLResponse!, error: NSError!, completion: (NSDictionary?, NSError?) -> ()) {
     
-    // Perform table updates on UI thread
+    // Always return on the main thread...
     let done: ((NSDictionary?, NSError?) -> Void) = {(json, error) in
         dispatch_async(dispatch_get_main_queue(), {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false

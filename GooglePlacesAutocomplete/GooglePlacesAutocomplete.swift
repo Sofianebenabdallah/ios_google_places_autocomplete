@@ -153,6 +153,12 @@ public class GooglePlacesAutocompleteService {
         params["components"] = "country:\(country)"
     }
     
+    if (searchString == ""){
+        let error = NSError(domain: ErrorDomain, code: 1000, userInfo: [NSLocalizedDescriptionKey:"No search string given"])
+        completion(nil,error)
+        return
+    }
+    
     GooglePlacesRequestHelpers.doRequest(
       "https://maps.googleapis.com/maps/api/place/autocomplete/json",
       params: params

@@ -98,6 +98,17 @@ public class PlaceDetails: CustomStringConvertible {
   public let name: String
   public let latitude: Double
   public let longitude: Double
+    
+    public let location: CLLocation
+    
+    public var region: CLCircularRegion
+    
+    public var radius: CLLocationDistance {
+        get {
+            return region.radius
+        }
+    }
+    
   public let raw: [String: AnyObject]
 
   public init(json: [String: AnyObject]) {
@@ -108,7 +119,26 @@ public class PlaceDetails: CustomStringConvertible {
     self.name = result["name"] as! String
     self.latitude = location["lat"] as! Double
     self.longitude = location["lng"] as! Double
+    self.location = CLLocation(latitude: self.latitude, longitude: self.longitude)!
+    
+    var radius: CLLocationDistance = 0
+    
+    if let viewport = geometry["viewport"] as? [String: AnyObject] {
+        let northEastDict = viewport["northeast"] as! [String: AnyObject]
+        let northEast = CLLocation(latitude: northEastDict["lat"] as! Double, longitude: northEastDict["lng"] as! Double)
+        let southWestDict = viewport["southwest"] as! [String: AnyObject]
+        let southWest = CLLocation(latitude: southWestDict["lat"] as! Double, longitude: southWestDict["lng"] as! Double)
+        
+        
+        radius = self.location.distanceFromLocation(northEast!)
+    }
+    
+    
+    self.region = CLCircularRegion(center: self.location.coordinate, radius: radius, identifier: self.name)!
+    
+    
     self.raw = json
+    
   }
 
   public var description: String {

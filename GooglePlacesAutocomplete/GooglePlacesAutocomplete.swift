@@ -381,7 +381,13 @@ class GooglePlaceDetailsRequest {
         "key": place.apiKey ?? ""
       ]
     ) { json, error in
-      result(PlaceDetails(json: json as! [String: AnyObject]))
+      if let json = json as? [String: AnyObject] {
+        result(PlaceDetails(json: json))
+      }
+      if let error = error {
+        // TODO: We should probably pass back details of the error
+        println("Error fetching google place details: \(error)")
+      }
     }
   }
 }

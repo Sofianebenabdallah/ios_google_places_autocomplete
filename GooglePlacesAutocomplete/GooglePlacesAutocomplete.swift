@@ -387,7 +387,7 @@ class GooglePlaceDetailsRequest {
       }
       if let error = error {
         // TODO: We should probably pass back details of the error
-        print("Error fetching google place details: \(error)")
+        println("Error fetching google place details: \(error)")
       }
     }
   }

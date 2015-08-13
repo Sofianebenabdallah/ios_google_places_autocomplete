@@ -121,7 +121,7 @@ public class PlaceDetails: Printable {
     self.longitude = location["lng"] as! Double
     self.location = CLLocation(latitude: self.latitude, longitude: self.longitude)!
     
-    var radius: CLLocationDistance = 1000 // default to 1km radius
+    var radius: CLLocationDistance = 10 // default to 10m radius
     
     if let viewport = geometry["viewport"] as? [String: AnyObject] {
         let northEastDict = viewport["northeast"] as! [String: AnyObject]

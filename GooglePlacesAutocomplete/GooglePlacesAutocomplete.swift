@@ -119,22 +119,20 @@ public class PlaceDetails: CustomStringConvertible {
     self.name = result["name"] as! String
     self.latitude = location["lat"] as! Double
     self.longitude = location["lng"] as! Double
-    self.location = CLLocation(latitude: self.latitude, longitude: self.longitude)!
+    self.location = CLLocation(latitude: self.latitude, longitude: self.longitude)
     
     var radius: CLLocationDistance = 10 // default to 10m radius
     
     if let viewport = geometry["viewport"] as? [String: AnyObject] {
+        // We are assuming that the place is circular and using the north-east to centre distance to derive the radius
         let northEastDict = viewport["northeast"] as! [String: AnyObject]
         let northEast = CLLocation(latitude: northEastDict["lat"] as! Double, longitude: northEastDict["lng"] as! Double)
-        let southWestDict = viewport["southwest"] as! [String: AnyObject]
-        let southWest = CLLocation(latitude: southWestDict["lat"] as! Double, longitude: southWestDict["lng"] as! Double)
-        
-        
-        radius = self.location.distanceFromLocation(northEast!)
+
+        radius = self.location.distanceFromLocation(northEast)
     }
     
     
-    self.region = CLCircularRegion(center: self.location.coordinate, radius: radius, identifier: self.name)!
+    self.region = CLCircularRegion(center: self.location.coordinate, radius: radius, identifier: self.name)
     
     
     self.raw = json
@@ -387,7 +385,7 @@ class GooglePlaceDetailsRequest {
       }
       if let error = error {
         // TODO: We should probably pass back details of the error
-        println("Error fetching google place details: \(error)")
+        print("Error fetching google place details: \(error)")
       }
     }
   }
@@ -466,7 +464,6 @@ class GooglePlacesRequestHelpers {
         options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
     } catch {
       print("Serialisation error")
-
       let serialisationError = NSError(domain: ErrorDomain, code: 1002, userInfo: [NSLocalizedDescriptionKey:"Serialization error"])
       done(nil,serialisationError)
       return

@@ -16,6 +16,12 @@ public struct LocationBias {
   public let longitude: CLLocationDegrees
   public let radius: CLLocationDistance
   
+  public init(latitude: Double = 0, longitude: Double = 0, radius: Int = 20000000) {
+    self.latitude = latitude
+    self.longitude = longitude
+    self.radius = Double(radius)
+  }
+  
   public init(latitude: Double = 0, longitude: Double = 0, radius: CLLocationDistance = 20000000) {
     self.latitude = latitude
     self.longitude = longitude

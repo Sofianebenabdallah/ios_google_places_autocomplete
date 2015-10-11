@@ -360,7 +360,7 @@ extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
     - parameter searchString: The search query
   */
   
-  func getPlaces(searchText: String){
+  private func getPlaces(searchText: String){
     gpaService.getPlaces(searchText, completion: {(places: [Place]?,error: NSError?) in
       self.tableView.reloadData()
       self.tableView.hidden = false

@@ -409,10 +409,10 @@ class GooglePlacesRequestHelpers {
   
   typealias JSON = [String: Any]
   
-  fileprivate class func query(_ parameters: [String: AnyObject]) -> String {
+  fileprivate class func query(_ parameters: [String: String]) -> String {
     var components: [(String, String)] = []
     for key in Array(parameters.keys).sorted(by: <) {
-      let value: AnyObject! = parameters[key]
+      let value = parameters[key]!
       components += [(escape(key), escape("\(value)"))]
     }
 
@@ -421,12 +421,12 @@ class GooglePlacesRequestHelpers {
 
   fileprivate class func escape(_ string: String) -> String {
     let legalURLCharactersToBeEscaped: CFString = ":/?&=;+!@#$()',*" as CFString
-    return CFURLCreateStringByAddingPercentEscapes(nil, string as CFString!, nil, legalURLCharactersToBeEscaped, CFStringBuiltInEncodings.UTF8.rawValue) as String
+    return CFURLCreateStringByAddingPercentEscapes(nil, string as CFString!, nil, legalURLCharactersToBeEscaped, CFStringBuiltInEncodings.UTF8.rawValue) as! String
   }
 
   fileprivate class func doRequest(_ url: String, params: [String: String], completion: @escaping (JSON?,Error?) -> ()) {
     let request = URLRequest(
-      url: URL(string: "\(url)?\(query(params as [String : AnyObject]))")!
+      url: URL(string: "\(url)?\(query(params))")!
     )
 
     let session = URLSession.shared

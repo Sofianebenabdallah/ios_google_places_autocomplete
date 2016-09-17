@@ -9,6 +9,8 @@
 import Foundation
 import XCTest
 import GooglePlacesAutocomplete
+import OHHTTPStubs
+import FBSnapshotTestCase
 
 class GooglePlaceDetailsRequestTests: XCTestCase {
   let json: [String : Any] = [

@@ -1,38 +1,40 @@
 PODS:
-  - FBSnapshotTestCase (2.0.4):
-    - FBSnapshotTestCase/SwiftSupport (= 2.0.4)
-  - FBSnapshotTestCase/Core (2.0.4)
-  - FBSnapshotTestCase/SwiftSupport (2.0.4):
+  - FBSnapshotTestCase (2.1.2):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.2)
+  - FBSnapshotTestCase/Core (2.1.2)
+  - FBSnapshotTestCase/SwiftSupport (2.1.2):
     - FBSnapshotTestCase/Core
-  - OHHTTPStubs (4.3.0):
-    - OHHTTPStubs/Default (= 4.3.0)
-  - OHHTTPStubs/Core (4.3.0)
-  - OHHTTPStubs/Default (4.3.0):
+  - OHHTTPStubs (5.2.1):
+    - OHHTTPStubs/Default (= 5.2.1)
+  - OHHTTPStubs/Core (5.2.1)
+  - OHHTTPStubs/Default (5.2.1):
     - OHHTTPStubs/Core
     - OHHTTPStubs/JSON
     - OHHTTPStubs/NSURLSession
     - OHHTTPStubs/OHPathHelpers
-  - OHHTTPStubs/JSON (4.3.0):
+  - OHHTTPStubs/JSON (5.2.1):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/NSURLSession (4.3.0):
+  - OHHTTPStubs/NSURLSession (5.2.1):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/OHPathHelpers (4.3.0)
+  - OHHTTPStubs/OHPathHelpers (5.2.1)
 
 DEPENDENCIES:
-  - FBSnapshotTestCase (from `git@github.com:facebook/ios-snapshot-test-case.git`)
-  - OHHTTPStubs (~> 4.3)
+  - FBSnapshotTestCase (from `https://github.com/facebook/ios-snapshot-test-case.git`)
+  - OHHTTPStubs (~> 5.2)
 
 EXTERNAL SOURCES:
   FBSnapshotTestCase:
-    :git: git@github.com:facebook/ios-snapshot-test-case.git
+    :git: https://github.com/facebook/ios-snapshot-test-case.git
 
 CHECKOUT OPTIONS:
   FBSnapshotTestCase:
-    :commit: cf04b3036d08233654184eb533938336c57f39af
-    :git: git@github.com:facebook/ios-snapshot-test-case.git
+    :commit: da629211c17a4c507e2e866e8a19ed3122af770b
+    :git: https://github.com/facebook/ios-snapshot-test-case.git
 
 SPEC CHECKSUMS:
-  FBSnapshotTestCase: 6c9fe22920e7bc8a98b6b3703ba24cd5ba0978ce
-  OHHTTPStubs: 0aec5755528693a165bd616cb79f69387de306a8
+  FBSnapshotTestCase: 918c55861356ee83aee7843d759f55a18ff6982b
+  OHHTTPStubs: 3a42f25c00563b71355ac73112ba2324e9e6cef4
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: af58372a62d86161ad6d06fbd86f6be7f9777b78
+
+COCOAPODS: 1.1.0.rc.2

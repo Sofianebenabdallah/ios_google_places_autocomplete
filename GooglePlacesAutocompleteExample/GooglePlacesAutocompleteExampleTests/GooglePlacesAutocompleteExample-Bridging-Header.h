@@ -9,6 +9,7 @@
 #ifndef GooglePlacesAutocompleteExample_GooglePlacesAutocompleteExample_Bridging_Header_h
 #define GooglePlacesAutocompleteExample_GooglePlacesAutocompleteExample_Bridging_Header_h
 
+#import <FBSnapshotTestCase/FBSnapshotTestCase.h>
 #import <OHHTTPStubs/OHHTTPStubs.h>
 
 #endif

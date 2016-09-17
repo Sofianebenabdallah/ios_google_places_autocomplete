@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 import XCTest
 import GooglePlacesAutocomplete
-import FBSnapshotTestCase
 import OHHTTPStubs
+import FBSnapshotTestCase
 
 class GooglePlacesAutocompleteTests: FBSnapshotTestCase, GooglePlacesAutocompleteDelegate {
   let gpaViewController = GooglePlacesAutocomplete(apiKey: "APIKEY")

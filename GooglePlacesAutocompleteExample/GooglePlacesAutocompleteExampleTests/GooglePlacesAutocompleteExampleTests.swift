@@ -14,7 +14,7 @@ import OHHTTPStubs
 import FBSnapshotTestCase
 
 class GooglePlacesAutocompleteTests: FBSnapshotTestCase, GooglePlacesAutocompleteDelegate {
-  let gpaViewController = GooglePlacesAutocomplete(apiKey: "APIKEY")
+  let gpaViewController = GooglePlacesAutocomplete(apiKey: apiKey)
   var expectation: XCTestExpectation!
 
   func testGooglePlacesAutocomplete() {
@@ -22,7 +22,7 @@ class GooglePlacesAutocompleteTests: FBSnapshotTestCase, GooglePlacesAutocomplet
     expectation = self.expectation(description: "Should return results")
 
     OHHTTPStubs.stubRequests(passingTest: { (request: URLRequest!) -> Bool in
-      return request.url!.absoluteString == "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Paris&key=APIKEY&types="
+      return request.url!.absoluteString == "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Paris&key=\(apiKey)&types="
       }, withStubResponse: { (request: URLRequest!) -> OHHTTPStubsResponse in
         return OHHTTPStubsResponse(jsonObject: json, statusCode: 200, headers: nil)
     })

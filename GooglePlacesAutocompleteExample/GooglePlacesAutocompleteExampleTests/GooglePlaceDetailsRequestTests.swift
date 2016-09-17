@@ -32,11 +32,11 @@ class GooglePlaceDetailsRequestTests: XCTestCase {
   ]
 
   func testSuccessfulDetailsRequest() {
-    let place = Place(prediction: ["place_id": "691b237b0322f28988f3ce03e321ff72a12167fd", "description": "Paris, France"], apiKey: "APIKEY")
+    let place = Place(prediction: ["place_id": "691b237b0322f28988f3ce03e321ff72a12167fd", "description": "Paris, France"], apiKey: apiKey)
     let expectation = self.expectation(description: "Should return details")
 
     OHHTTPStubs.stubRequests(passingTest: { (request: URLRequest!) -> Bool in
-      return request.url!.absoluteString == "https://maps.googleapis.com/maps/api/place/details/json?key=APIKEY&placeid=\(place.id)"
+      return request.url!.absoluteString == "https://maps.googleapis.com/maps/api/place/details/json?key=\(apiKey)&placeid=\(place.id)"
       }, withStubResponse: { (request: URLRequest!) -> OHHTTPStubsResponse in
         return OHHTTPStubsResponse(jsonObject: self.json, statusCode: 200, headers: nil)
     })

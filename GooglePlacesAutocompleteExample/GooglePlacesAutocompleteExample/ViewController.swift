@@ -10,7 +10,7 @@ import UIKit
 import GooglePlacesAutocomplete
 
 /// Insert your API-KEY here... it will also be used for the tests
-let apiKey: String = "[YOUR GOOGLE PLACES API KEY]"
+let apiKey: String = API_KEY
 
 class ViewController: UIViewController {
   let gpaViewController = GooglePlacesAutocomplete(

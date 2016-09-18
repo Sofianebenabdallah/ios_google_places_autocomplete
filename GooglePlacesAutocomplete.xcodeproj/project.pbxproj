@@ -39,6 +39,10 @@
 		1EC16D921A8E1D0100E0760A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22035D7A1D8DD39A0025C40C /* GooglePlacesAutocomplete.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = GooglePlacesAutocomplete.podspec; sourceTree = "<group>"; };
 		22035D801D8E88F50025C40C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		22035D841D8EB77C0025C40C /* Rakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rakefile; sourceTree = "<group>"; };
+		22035D851D8EB78A0025C40C /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; };
+		22035D861D8EB7960025C40C /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		22035D871D8EB8670025C40C /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		250488F06CCFC9FBE00CDDE4 /* Pods_GooglePlacesAutocomplete.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GooglePlacesAutocomplete.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EEFDA1E10558960E32F0F31 /* Pods-GooglePlacesAutocompleteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GooglePlacesAutocompleteTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GooglePlacesAutocompleteTests/Pods-GooglePlacesAutocompleteTests.debug.xcconfig"; sourceTree = "<group>"; };
 		54C116A71400A82AA4466D4B /* Pods-GooglePlacesAutocomplete.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GooglePlacesAutocomplete.release.xcconfig"; path = "Pods/Target Support Files/Pods-GooglePlacesAutocomplete/Pods-GooglePlacesAutocomplete.release.xcconfig"; sourceTree = "<group>"; };
@@ -73,6 +77,10 @@
 			children = (
 				1EC16D831A8E1D0100E0760A /* GooglePlacesAutocomplete */,
 				22035D7A1D8DD39A0025C40C /* GooglePlacesAutocomplete.podspec */,
+				22035D841D8EB77C0025C40C /* Rakefile */,
+				22035D851D8EB78A0025C40C /* Gemfile */,
+				22035D871D8EB8670025C40C /* .travis.yml */,
+				22035D861D8EB7960025C40C /* CHANGELOG.md */,
 				1EC16D901A8E1D0100E0760A /* GooglePlacesAutocompleteTests */,
 				1EC16D821A8E1D0100E0760A /* Products */,
 				AD8E8FB00B303CE4801439E1 /* Frameworks */,

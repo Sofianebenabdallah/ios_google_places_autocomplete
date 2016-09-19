@@ -9,9 +9,19 @@
 import UIKit
 import GooglePlacesAutocomplete
 
-/// Insert your API-KEY here... it will also be used for the tests
-let apiKey: String = API_KEY
 
+#if API_KEY
+  /// You can either set an API_KEY environment variable which will be used by the example and tests ...
+  lazy var apiKey: String = {
+    let dict = NSProcessInfo.processInfo().environment
+    return dict["API_KEY"] as! String
+  }()
+#else
+  /// or you can type one in here - just try not to reveal it to the world
+  let apiKey: String = "API_KEY"
+#endif
+  
+  
 class ViewController: UIViewController {
   let gpaViewController = GooglePlacesAutocomplete(
     apiKey: apiKey,

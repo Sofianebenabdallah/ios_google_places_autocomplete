@@ -49,6 +49,6 @@ class GooglePlaceDetailsRequestTests: XCTestCase {
       expectation.fulfill()
     }
 
-    self.waitForExpectations(timeout: 2.0, handler: nil)
+    self.waitForExpectations(timeout: 4.0, handler: nil)
   }
 }

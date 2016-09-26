@@ -44,7 +44,7 @@ class LocationBiasRequestTests: XCTestCase, GooglePlacesAutocompleteDelegate {
       )
     })
     
-    self.waitForExpectations(timeout: 2.0, handler: nil)
+    self.waitForExpectations(timeout: 4.0, handler: nil)
   }
   
   func placesFound(_ places: [Place]) {

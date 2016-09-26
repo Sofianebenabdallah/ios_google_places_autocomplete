@@ -20,7 +20,7 @@ class LocationBiasRequestTests: XCTestCase, GooglePlacesAutocompleteDelegate {
     expectation = self.expectation(description: "Should return biased results")
     
     OHHTTPStubs.stubRequests(passingTest: { (request: URLRequest!) -> Bool in
-      return request.url!.absoluteString == "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Paris&key=\(apiKey)&location=48.8534275%2C2.35827879999999&radius=1000&types="
+      return request.url!.absoluteString == "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Paris&key=\(apiKey)&location=48.8534275%2C2.35827879999999&radius=1000.0&types="
       }, withStubResponse: { (request: URLRequest!) -> OHHTTPStubsResponse in
         return OHHTTPStubsResponse(
           jsonObject: ["predictions" : [[

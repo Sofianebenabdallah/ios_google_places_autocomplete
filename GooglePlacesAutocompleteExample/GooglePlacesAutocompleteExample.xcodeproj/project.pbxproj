@@ -138,10 +138,9 @@
 			isa = PBXGroup;
 			children = (
 				1E6140911A90DD2800FAB3D1 /* GooglePlacesAutocompleteExampleTests.swift */,
-				1E61408F1A90DD2800FAB3D1 /* Supporting Files */,
-				1E83234E1A923E5C002DB47B /* GooglePlacesAutocompleteExample-Bridging-Header.h */,
 				1ECA5AA31AC2D2EE00D88B02 /* GooglePlaceDetailsRequestTests.swift */,
 				1ECCB5891B417714005A1DA4 /* LocationBiasRequestTests.swift */,
+				1E61408F1A90DD2800FAB3D1 /* Supporting Files */,
 			);
 			path = GooglePlacesAutocompleteExampleTests;
 			sourceTree = "<group>";
@@ -149,6 +148,7 @@
 		1E61408F1A90DD2800FAB3D1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1E83234E1A923E5C002DB47B /* GooglePlacesAutocompleteExample-Bridging-Header.h */,
 				1E6140901A90DD2800FAB3D1 /* Info.plist */,
 			);
 			name = "Supporting Files";

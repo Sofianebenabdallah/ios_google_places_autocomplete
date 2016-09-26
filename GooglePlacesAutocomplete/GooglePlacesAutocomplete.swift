@@ -203,9 +203,9 @@ open class GooglePlacesAutocompleteService {
               self.places = predictions.map { (prediction: [String: Any]) -> Place in
                 return Place(prediction: prediction, apiKey: self.apiKey)
               }
-              self.delegate?.placesFound?(self.places)
+              
               completion(self.places, error)
-
+              self.delegate?.placesFound?(self.places)
             } else {
                 completion(nil, error)
             }

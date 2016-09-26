@@ -34,6 +34,7 @@ class GooglePlacesAutocompleteTests: FBSnapshotTestCase, GooglePlacesAutocomplet
     let rootVC = UIApplication.shared.keyWindow!.rootViewController!
 
     rootVC.present(self.gpaViewController, animated: false, completion: {
+      self.gpaViewController.gpaViewController.searchBar.tintColor = UIColor.clear // hide the cursor so it isn't blinking blinking
       self.FBSnapshotVerifyView(self.gpaViewController.view, identifier: "view", tolerance: 0)
       self.gpaViewController.gpaViewController.searchBar(
         self.gpaViewController.gpaViewController.searchBar,

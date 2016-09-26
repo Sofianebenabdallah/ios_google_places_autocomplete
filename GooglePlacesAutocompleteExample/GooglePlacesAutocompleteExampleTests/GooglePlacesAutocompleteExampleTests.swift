@@ -34,7 +34,7 @@ class GooglePlacesAutocompleteTests: FBSnapshotTestCase, GooglePlacesAutocomplet
     let rootVC = UIApplication.shared.keyWindow!.rootViewController!
 
     rootVC.present(self.gpaViewController, animated: false, completion: {
-      self.FBSnapshotVerifyView(self.gpaViewController.view, identifier: "view", suffixes: [], tolerance: 0.3)
+      self.FBSnapshotVerifyView(self.gpaViewController.view, identifier: "view", tolerance: 0)
       self.gpaViewController.gpaViewController.searchBar(
         self.gpaViewController.gpaViewController.searchBar,
         textDidChange: "Paris"
@@ -45,8 +45,7 @@ class GooglePlacesAutocompleteTests: FBSnapshotTestCase, GooglePlacesAutocomplet
   }
 
   func placesFound(_ places: [Place]) {
-    self.FBSnapshotVerifyView(self.gpaViewController.view, identifier: "search", suffixes: [], tolerance: 0.3)
-    
+    self.FBSnapshotVerifyView(self.gpaViewController.view, identifier: "search",  tolerance: 0)
     expectation.fulfill()
   }
 
